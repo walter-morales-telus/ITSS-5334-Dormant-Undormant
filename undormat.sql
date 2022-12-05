@@ -38,19 +38,37 @@ object_id IN
     9159688573513591152  /* Blocking vocal segment */
 );
 
-/* Allow 911 Deselect*/
-update nc_params set value = '0' where attr_id = 9125718672413237366 and object_id in (
-select relationship.object_id
-from nc_references r,
-nc_references child,
-nc_objects relationship
-where relationship.object_type_id = 9125737315713245977 /* Product Offering Relationship */
-and r.object_id = relationship.object_id
-and r.attr_id = 9125718672413237377 /* Parent */
-and r.reference in (9164472127674923587, 9162909276385310484)
-and child.object_id = r.object_id
-and child.attr_id = 9125718672413237378
-and child.reference in (9162873610565861000));
+/* ALLOW 911 Deselect*/
+update nc_params set value = '0' where attr_id = 9125718672413237366 and object_id in 
+(
+    select relationship.object_id
+    from nc_references r,
+    nc_references child,
+    nc_objects relationship
+    where relationship.object_type_id = 9125737315713245977 /* Product Offering Relationship */
+    and r.object_id = relationship.object_id
+    and r.attr_id = 9125718672413237377 /* Parent */
+    and r.reference in (9164472127674923587, 9162909276385310484)
+    and child.object_id = r.object_id
+    and child.attr_id = 9125718672413237378
+    and child.reference in (9162873610565861000)
+);
+
+/* ALLOW Name Display Deselect */
+update nc_params set value = '0' where attr_id = 9125718672413237366 and object_id in 
+(
+    select relationship.object_id
+    from nc_references r, nc_references child, nc_objects relationship
+    where relationship.object_type_id = 9125737315713245977 /* Product Offering Relationship */
+    and r.object_id = relationship.object_id
+    and r.attr_id = 9125718672413237377 /* Parent */
+                     /* Home Phone           Home Phone Lite */
+    and r.reference in (9164472127674923587, 9162909276385310484)
+    and child.object_id = r.object_id
+    and child.attr_id = 9125718672413237378
+                         /* Name Display*/
+    and child.reference in (9136923654113578870)
+);
 
 UPDATE nc_params    /*YES*/
 SET list_value_id = 5032957201013871249	  
@@ -63,5 +81,7 @@ object_id IN
     /* Warn when “Remove” 900 Block & Toll Block because of additional fee */
     9164964965693303513,
     /* Warning message is shown if no long distance plan is selected */
-    9164872816244407743
+    9164872816244407743,
+    /* Add tech charge when TQ Home Phone is not Warm home */
+    9164913781570303415
 );

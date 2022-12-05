@@ -28,7 +28,7 @@ DELETE FROM nc_objects WHERE object_id IN
     AND child.reference IN (9136923654113578850, 9136923654113578856)
 );
 
-/* Avoid Municipal tax for 9-1-1 Deselect*/
+/* AVOID Municipal tax for 9-1-1 Deselect*/
 update nc_params set value = '1' where attr_id = 9125718672413237366 and object_id in 
 (
     select relationship.object_id
@@ -44,7 +44,7 @@ update nc_params set value = '1' where attr_id = 9125718672413237366 and object_
     and child.reference in (9162873610565861000)
 );
 
-/* Name Display Deselect */
+/* AVOID Name Display Deselect */
 update nc_params set value = '1' where attr_id = 9125718672413237366 and object_id in 
 (
     select relationship.object_id
